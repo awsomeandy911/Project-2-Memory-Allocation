@@ -434,7 +434,6 @@ void listAvailable(int count, process arr[], int N)
 
 
 
-
 int main(int argc, char** argv)
 {
 	
@@ -447,64 +446,93 @@ int main(int argc, char** argv)
 	char last[7];
 	process arr[200000];
 
-	while(fscanf(fptr,"%s",input) ==1){
-		if(strcmp(comment,input) == 0){
+	while(fscanf(fptr,"%s",input) ==1)
+    {
+		if(strcmp(comment,input) == 0)
+        {
 			fscanf(fptr, "%*[^\n]\n");
 			continue;
-		}else if(strcmp("REQUEST", input) == 0){
+		}
+        else if(strcmp("REQUEST", input) == 0)
+        {
 			char temp[7];
 			int bytes;
-			if(fscanf(fptr,"%s",input) == 1){
+			if(fscanf(fptr,"%s",input) == 1)
+            {
 				strncpy(temp,input,7);
 			
 			}
-			if(fscanf(fptr, "%s", input) == 1){
+			if(fscanf(fptr, "%s", input) == 1)
+            {
 				bytes =atoi(input);
 			}
 
-			if(strcmp("BESTFIT",argv[1]) == 0){
-				if(bestFit(temp,bytes,count,arr,N)==1){
+			if(strcmp("BESTFIT",argv[1]) == 0)
+            {
+				if(bestFit(temp,bytes,count,arr,N)==1)
+                {
 					count++;
 				}
 	
-			}else if(strcmp("FIRSTFIT",argv[1])==0){
-				if(firstFit(temp,bytes,count,arr,N)==1){
+			}
+            else if(strcmp("FIRSTFIT",argv[1])==0)
+            {
+				if(firstFit(temp,bytes,count,arr,N)==1)
+                {
 					count++;
 				}
 			
 			
-			}else if(strcmp("NEXTFIT",argv[1])==0){
-				if(nextFit(last,temp,bytes,count,arr,N)==1){
+			}
+            else if(strcmp("NEXTFIT",argv[1])==0)
+            {
+				if(nextFit(last,temp,bytes,count,arr,N)==1)
+                {
 					count++;
 					strncpy(last,temp,7);
 				}
 				
-			}else if(strcmp("WORSTFIT",argv[1])==0){
-				if(worstFit(temp,bytes,count,arr,N) ==1){
+			}
+            else if(strcmp("WORSTFIT",argv[1])==0)
+            {
+				if(worstFit(temp,bytes,count,arr,N) ==1)
+                {
 					count++;
 				}
 				
 			}
-		}else if(strcmp("RELEASE",input)==0){
+		}
+        
+        else if(strcmp("RELEASE",input)==0)
+        {
 			char temp[7];
-			if(fscanf(fptr,"%s",input) == 1){
+			if(fscanf(fptr,"%s",input) == 1)
+            {
 				strncpy(temp,input,7);
 			}
 			
-			if(release(temp, count, arr)==1){
+			if(release(temp, count, arr)==1)
+            {
 				count--;
 			}
 			
-		}else if(strcmp("LIST",input) == 0){
+		}
+        else if(strcmp("LIST",input) == 0)
+        {
 			fscanf(fptr,"%s",input);
-			if(strcmp("ASSIGNED",input) == 0){
+			if(strcmp("ASSIGNED",input) == 0)
+            {
 				listAssigned(count,arr);
 			}
-			else{
+			else
+            {
 				listAvailable(count,arr,N);
 			}
-		}else if(strcmp("FIND",input) == 0){
-			if(fscanf(fptr,"%s",input) == 1){
+		}
+        else if(strcmp("FIND",input) == 0)
+        {
+			if(fscanf(fptr,"%s",input) == 1)
+            {
 				find(input,arr,count);
 			}
 		}	
