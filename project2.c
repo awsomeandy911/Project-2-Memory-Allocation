@@ -9,7 +9,7 @@ struct process
 	int startMemory;
 	int endMemory;
 	int size;
-    char pid[7];
+    	char processID[7];
 };
 
 typedef struct process process;
@@ -29,10 +29,10 @@ void find(char temp[],process arr[],int count)
  	short marker = 0;
 	for(int i = 0; i < count; i++)
     {
-		if(strcmp(temp,arr[i].pid)==0)
+		if(strcmp(temp,arr[i].processID)==0)
         {
 			marker = 1;
-			printf("(%s, %d, %d)\n", arr[i].pid, arr[i].size, arr[i].startMemory);
+			printf("(%s, %d, %d)\n", arr[i].processID, arr[i].size, arr[i].startMemory);
 		}
 
 	}
@@ -94,12 +94,12 @@ short firstFit(char temp[], int bytes, int count,  process arr[], int N)
 
 	if(marker == 1)
     {
-		strncpy(arr[count].pid, temp,7);
+		strncpy(arr[count].processID, temp,7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
 			
-		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
 		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
@@ -168,12 +168,12 @@ short bestFit(char temp[], int bytes, int count,  process arr[], int N)
 
 	if(marker == 1)
     {
-		strncpy(arr[count].pid, temp,7);
+		strncpy(arr[count].processID, temp,7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
 		
-		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 		qsort(arr,count+1,sizeof(process),processCompare);
 
 		return 1;
@@ -236,12 +236,12 @@ short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
 	}
 	if(marker == 1)
     {
-		strncpy(arr[count].pid, temp,7);
+		strncpy(arr[count].processID, temp,7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
 			
-		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
 		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
@@ -278,7 +278,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
     {
 		for(int i =0; i < count; i++)
         {
-		    if(strcmp(last,arr[i].pid)==0)
+		    if(strcmp(last,arr[i].processID)==0)
             {
 			    lastidx = i;
 			    index = i;
@@ -318,12 +318,12 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 
 	if(marker == 1)
     {
-		strncpy(arr[count].pid, temp,7);
+		strncpy(arr[count].processID, temp,7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
 			
-		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
 		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
@@ -342,7 +342,7 @@ short release(char temp[],  int count,  process arr[])
 	int index;
 	for(int i = 0; i < count; i++)
     {
-		if(strcmp(temp,arr[i].pid) == 0)
+		if(strcmp(temp,arr[i].processID) == 0)
         {
 			marker = 1;
 			index = i;
@@ -351,7 +351,7 @@ short release(char temp[],  int count,  process arr[])
 
 	if(marker == 1)
     {
-		printf("FREE %s %d %d \n",arr[index].pid, arr[index].size, arr[index].startMemory);
+		printf("FREE %s %d %d \n",arr[index].processID, arr[index].size, arr[index].startMemory);
 		for(int i = index; i <count-1; i++)
         {
 			arr[i] = arr[i+1];
@@ -377,7 +377,7 @@ void listAssigned(int count,  process arr[])
     {
 		for (int i = 0; i < count; i++)
         {
-			printf("(%s, %d, %d) ",arr[i].pid, arr[i].size, arr[i].startMemory);
+			printf("(%s, %d, %d) ",arr[i].processID, arr[i].size, arr[i].startMemory);
 		}
 
 	}
