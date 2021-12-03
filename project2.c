@@ -9,8 +9,8 @@ struct Process
 	int startMemory;
 	int endMemory;
 	int size;
-    	char processID[7];
-    
+    char processID[7];
+
 }; typedef struct Process Process;
 
 //compares the processes
@@ -19,7 +19,6 @@ int processCompare(const void * left, const void * right)
 	const Process *a =(const void*) left;
 	const Process *b = (const void*) right;
 	return (*a).startMemory - (*b).startMemory;
-
 }
 
 //function to find specific process
@@ -108,7 +107,6 @@ short firstFit(char temp[], int bytes, int count,  Process arr[], int N)
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
-
 }
 
 //function for best fit memory allocation algorithim
@@ -182,8 +180,6 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 		return 0;
 	}
-	
-
 }
 
 //function for worst fit memory allocation algorithim
@@ -314,7 +310,6 @@ short  nextFit(char last[], char temp[], int bytes, int count,  Process arr[], i
 		}
 	}
 	
-
 	if(marker == 1)
     {
 		strncpy(arr[count].processID, temp,7);
