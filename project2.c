@@ -194,39 +194,48 @@ short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
 	int max =INT_MIN;
 	short marker = 0;
 	int free;
-	if(bytes <= 0){
+    
+	if(bytes <= 0)
+    {
 
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
-	if(count == 0 && bytes <= N ){
+	if(count == 0 && bytes <= N )
+    {
 		start = 0;
 		marker = 1;
 	}	
-	if(count !=0){
+	if(count !=0)
+    {
 		free = arr[0].startMemory - 0;
-		if(bytes > 0 && free >max && free >= bytes){
+		if(bytes > 0 && free >max && free >= bytes)
+        {
 			max = free;
 			start=0;
 			marker = 1;
 		}
 	}
 
-	for(int i = 0; i < count; i++){
-		
-		if(i == count-1){
+	for(int i = 0; i < count; i++)
+    {
+		if(i == count-1)
+        {
 			free = N - arr[i].endMemory;
 		} 
-		else{
+		else
+        {
 			free = arr[i+1].startMemory - arr[i].endMemory;
 		}
-		if(free > max && free >= bytes){
+		if(free > max && free >= bytes)
+        {
 			max = free;
 			start = arr[i].endMemory;
 			marker = 1;
 		}
 	}
-	if(marker == 1){
+	if(marker == 1)
+    {
 		strncpy(arr[count].pid, temp,7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
@@ -237,7 +246,8 @@ short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
 		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
 	}
-	else{
+	else
+    {
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
@@ -253,54 +263,61 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 	int index;
 	
 
-	if(bytes <= 0){
+	if(bytes <= 0)
+    {
 
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
-	if(count == 0 && bytes <= N){
+	if(count == 0 && bytes <= N)
+    {
 		start = 0;
 		marker =1;
 	}	
-	if(count != 0){
-		for(int i =0; i < count; i++){
-		if(strcmp(last,arr[i].pid)==0){
-			lastidx = i;
-			index = i;
+	if(count != 0)
+    {
+		for(int i =0; i < count; i++)
+        {
+		    if(strcmp(last,arr[i].pid)==0)
+            {
+			    lastidx = i;
+			    index = i;
+		    }
 		}
-		}
-
 	}
 	
-	if(lastidx != -1){
+	if(lastidx != -1)
+    {
 		for(int i = 0; i <= count; i++) 
 		{
-		if(index == count-1){
-			free = N - arr[index].endMemory;
-		}else if(index == count){
-			free = arr[0].startMemory - 0;
-		}
-		else{
-			free = arr[index+1].startMemory - arr[index].endMemory;
-		}	
+		    if(index == count-1)
+            {
+		    	free = N - arr[index].endMemory;
+		    }
+                else if(index == count)
+                {
+			        free = arr[0].startMemory - 0;
+		        }
+		            else
+                    {
+		            	free = arr[index+1].startMemory - arr[index].endMemory;
+		            }	
 
 		
-		if(free>=bytes){
+		if(free>=bytes)
+        {
 			start = arr[index].endMemory;
 			marker = 1;
 			break;
 		}
-
-
-
 		index++;
 		index = index % (count+1);
-
 		}
 	}
 	
 
-	if(marker == 1){
+	if(marker == 1)
+    {
 		strncpy(arr[count].pid, temp,7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
@@ -311,7 +328,8 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
 	}
-	else{
+	else
+    {
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
@@ -322,22 +340,27 @@ short release(char temp[],  int count,  process arr[])
 {
 	short marker = 0;
 	int index;
-	for(int i = 0; i < count; i++){
-		if(strcmp(temp,arr[i].pid) == 0){
+	for(int i = 0; i < count; i++)
+    {
+		if(strcmp(temp,arr[i].pid) == 0)
+        {
 			marker = 1;
 			index = i;
 		}
 	}
 
-	if(marker == 1){
+	if(marker == 1)
+    {
 		printf("FREE %s %d %d \n",arr[index].pid, arr[index].size, arr[index].startMemory);
-		for(int i = index; i <count-1; i++){
+		for(int i = index; i <count-1; i++)
+        {
 			arr[i] = arr[i+1];
 		}
 		
 		return 1;
 	}
-	else{
+	else
+    {
 		printf("FAIL RELEASE %s\n", temp);
 		return 0;
 	}
@@ -346,11 +369,14 @@ short release(char temp[],  int count,  process arr[])
 //prints assigned list
 void listAssigned(int count,  process arr[])
 {
-	if(count == 0){
+	if(count == 0)
+    {
 		printf("NONE");
 	}
-	else{
-		for (int i = 0; i < count; i++){
+	else
+    {
+		for (int i = 0; i < count; i++)
+        {
 			printf("(%s, %d, %d) ",arr[i].pid, arr[i].size, arr[i].startMemory);
 		}
 
@@ -364,35 +390,43 @@ void listAvailable(int count, process arr[], int N)
 {
 	short marker = 0;
 	int free;
-	if(count == 0){
+	if(count == 0)
+    {
 		marker =1;
 		printf("(%d, %d) ",N, 0);
 	}
 	else
 	{
 		free = arr[0].startMemory-0 ;
-		if(free > 0){
+		if(free > 0)
+        {
 			marker = 1;
 			printf("(%d, %d) ",free, 0);
 		}
 	}
-	for(int i =0; i < count; i++){
-		if(i == count-1){
+	for(int i =0; i < count; i++)
+    {
+		if(i == count-1)
+        {
 			free = N-arr[i].endMemory;
-			if(free > 0){
+			if(free > 0)
+            {
 				marker = 1;
 				printf("(%d, %d) ",free,arr[i].endMemory);
 			}
 		}
-		else{
+		else
+        {
 			free = arr[i+1].startMemory - arr[i].endMemory;
-			if(free > 0 ){
+			if(free > 0 )
+            {
 				marker =1;
 				printf("(%d, %d) ", free,arr[i].endMemory);
 			}
 		}
 	}
-	if(marker == 0){
+	if(marker == 0)
+    {
 		printf("FULL");
 	}
 	printf("\n");
