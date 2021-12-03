@@ -13,14 +13,6 @@ struct Process
 
 }; typedef struct Process Process;
 
-//compares the processes
-int processCompare(const void * left, const void * right)
-{
-	const Process *a =(const void*) left;
-	const Process *b = (const void*) right;
-	return (*a).startMemory - (*b).startMemory;
-}
-
 //function to find specific process
 void findProcess(char temp[],Process arr[],int count)
 {
@@ -32,13 +24,19 @@ void findProcess(char temp[],Process arr[],int count)
 			marker = 1;
 			printf("(%s, %d, %d)\n", arr[i].processID, arr[i].size, arr[i].startMemory);
 		}
-
 	}
-
 	if(marker == 0 )
     {
 		printf("FAULT\n");
 	}
+}
+
+//compares the processes
+int processCompare(const void * left, const void * right)
+{
+	const Process *a =(const void*) left;
+	const Process *b = (const void*) right;
+	return (*a).startMemory - (*b).startMemory;
 }
 
 //function for first fit memory allocation algorithim
