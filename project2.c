@@ -6,10 +6,10 @@
 //struct that stores the process objects
 struct process
 {
-	char pid[7];
 	int startMemory;
 	int endMemory;
 	int size;
+    char pid[7];
 };
 
 typedef struct process process;
