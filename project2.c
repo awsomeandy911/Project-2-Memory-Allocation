@@ -3,6 +3,7 @@
 #include <string.h>
 #include <limits.h>
 
+//struct that stores the process objects
 struct process
 {
 	char pid[7];
@@ -13,7 +14,7 @@ struct process
 
 typedef struct process process;
 
-
+//compares the processes
 int processCompare(const void * left, const void * right)
 {
 	const process *a =(const void*) left;
@@ -22,6 +23,7 @@ int processCompare(const void * left, const void * right)
 
 }
 
+//find function
 void find(char temp[],process array[],int count)
 {
  	short flag = 0;
@@ -38,6 +40,63 @@ void find(char temp[],process array[],int count)
 	}
 }
 
+//function for first fit memory allocation algorithim
+short firstFit(char temp[], int bytes, int count,  process array[], int N)
+{
+	int start;
+	short flag =0;
+	int free;
+	
+	if(bytes <= 0){
+
+		printf("FAIL REQUEST %s %d\n", temp, bytes);
+			return 0;
+	}
+	if(count == 0){
+		free = N;
+	}else{
+		free = array[0].startMemory - 0;
+	}
+
+	if(bytes >0 && free >=bytes){
+		start = 0;
+		flag =1;
+	}
+	if(flag == 0){
+		for(int i =0; i < count; i++){
+			if(i == count-1){
+				free = N - array[i].endMemory;
+			}else{
+				free = array[i+1].startMemory - array[i].endMemory;
+			}	
+			if(free>=bytes){
+				start = array[i].endMemory;
+				flag = 1;
+				break;
+			}
+
+		}
+	}
+
+	if(flag == 1){
+		strncpy(array[count].pid, temp,7);
+		array[count].startMemory = start;
+		array[count].endMemory = array[count].startMemory + bytes;
+		array[count].size = bytes;
+			
+		printf("ALLOCATED %s %d \n",array[count].pid, array[count].startMemory);
+	
+		qsort(array,count+1,sizeof(process),processCompare);
+		return 1;
+	}
+	else{
+		printf("FAIL REQUEST %s %d\n", temp, bytes);
+			return 0;
+	}
+
+}
+
+//function for best fit memory allocation algorithim
 short bestFit(char temp[], int bytes, int count,  process array[], int N)
 {
 	int start;
@@ -100,43 +159,45 @@ short bestFit(char temp[], int bytes, int count,  process array[], int N)
 
 }
 
-short firstFit(char temp[], int bytes, int count,  process array[], int N)
+//function for worst fit memory allocation algorithim
+short  worstFit(char temp[], int bytes,  int count, process array[], int N)
 {
 	int start;
-	short flag =0;
+	int max =INT_MIN;
+	short flag = 0;
 	int free;
-	
 	if(bytes <= 0){
 
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
-	if(count == 0){
-		free = N;
-	}else{
-		free = array[0].startMemory - 0;
-	}
-
-	if(bytes >0 && free >=bytes){
+	if(count == 0 && bytes <= N ){
 		start = 0;
-		flag =1;
-	}
-	if(flag == 0){
-		for(int i =0; i < count; i++){
-			if(i == count-1){
-				free = N - array[i].endMemory;
-			}else{
-				free = array[i+1].startMemory - array[i].endMemory;
-			}	
-			if(free>=bytes){
-				start = array[i].endMemory;
-				flag = 1;
-				break;
-			}
-
+		flag = 1;
+	}	
+	if(count !=0){
+		free = array[0].startMemory - 0;
+		if(bytes > 0 && free >max && free >= bytes){
+			max = free;
+			start=0;
+			flag = 1;
 		}
 	}
 
+	for(int i = 0; i < count; i++){
+		
+		if(i == count-1){
+			free = N - array[i].endMemory;
+		} 
+		else{
+			free = array[i+1].startMemory - array[i].endMemory;
+		}
+		if(free > max && free >= bytes){
+			max = free;
+			start = array[i].endMemory;
+			flag = 1;
+		}
+	}
 	if(flag == 1){
 		strncpy(array[count].pid, temp,7);
 		array[count].startMemory = start;
@@ -152,9 +213,9 @@ short firstFit(char temp[], int bytes, int count,  process array[], int N)
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
-
 }
 
+//function for next fit memory allocation algorithim
 short  nextFit(char last[], char temp[], int bytes, int count,  process array[], int N)
 {
 	int start;
@@ -228,61 +289,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process array[],
 	}
 }
 
-short  worstFit(char temp[], int bytes,  int count, process array[], int N)
-{
-	int start;
-	int max =INT_MIN;
-	short flag = 0;
-	int free;
-	if(bytes <= 0){
-
-		printf("FAIL REQUEST %s %d\n", temp, bytes);
-			return 0;
-	}
-	if(count == 0 && bytes <= N ){
-		start = 0;
-		flag = 1;
-	}	
-	if(count !=0){
-		free = array[0].startMemory - 0;
-		if(bytes > 0 && free >max && free >= bytes){
-			max = free;
-			start=0;
-			flag = 1;
-		}
-	}
-
-	for(int i = 0; i < count; i++){
-		
-		if(i == count-1){
-			free = N - array[i].endMemory;
-		} 
-		else{
-			free = array[i+1].startMemory - array[i].endMemory;
-		}
-		if(free > max && free >= bytes){
-			max = free;
-			start = array[i].endMemory;
-			flag = 1;
-		}
-	}
-	if(flag == 1){
-		strncpy(array[count].pid, temp,7);
-		array[count].startMemory = start;
-		array[count].endMemory = array[count].startMemory + bytes;
-		array[count].size = bytes;
-			
-		printf("ALLOCATED %s %d \n",array[count].pid, array[count].startMemory);
-	
-		qsort(array,count+1,sizeof(process),processCompare);
-		return 1;
-	}
-	else{
-		printf("FAIL REQUEST %s %d\n", temp, bytes);
-			return 0;
-	}
-}
-
+//release function
 short release(char temp[],  int count,  process array[])
 {
 	short flag = 0;
@@ -308,6 +315,7 @@ short release(char temp[],  int count,  process array[])
 	}
 }
 
+//prints assigned list
 void listAssigned(int count,  process array[])
 {
 	if(count == 0){
@@ -323,7 +331,8 @@ void listAssigned(int count,  process array[])
 	printf("\n");
 }
 
-void listAvaiable(int count, process array[], int N)
+//prints available
+void listAvailable(int count, process array[], int N)
 {
 	short flag = 0;
 	int free;
@@ -364,7 +373,8 @@ void listAvaiable(int count, process array[], int N)
 
 
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
 	
 	FILE *fptr;
 	fptr = fopen(argv[3],"r");
@@ -429,7 +439,7 @@ int main(int argc, char** argv){
 				listAssigned(count,array);
 			}
 			else{
-				listAvaiable(count,array,N);
+				listAvailable(count,array,N);
 			}
 		}else if(strcmp("FIND",input) == 0){
 			if(fscanf(fptr,"%s",input) == 1){
