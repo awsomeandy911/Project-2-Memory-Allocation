@@ -19,14 +19,14 @@ void findProcess(char temp[],Process arr[],int count)
  	short marker = 0;
 	for(int i = 0; i < count; i++)
     	{
-		if(strcmp(temp,arr[i].processID)==0)
+		if(strcmp(temp,arr[i].processID) == 0)
         	{
 			marker = 1;
 			printf("(%s, %d, %d)\n", arr[i].processID, arr[i].size, arr[i].startMemory);
 		}
 	}
 	if(marker == 0 )
-   	{
+    	{
 		printf("FAULT\n");
 	}
 }
@@ -43,7 +43,7 @@ int processCompare(const void * left, const void * right)
 short firstFit(char temp[], int bytes, int count,  Process arr[], int N)
 {
 	int start;
-	short marker =0;
+	short marker = 0;
 	int free;
 	
 	if(bytes <= 0)
@@ -61,22 +61,22 @@ short firstFit(char temp[], int bytes, int count,  Process arr[], int N)
 		free = arr[0].startMemory - 0;
 	}
 
-	if(bytes >0 && free >=bytes)
+	if(bytes > 0 && free >=bytes)
     {
 		start = 0;
-		marker =1;
+		marker = 1;
 	}
 	if(marker == 0)
     {
 		for(int i =0; i < count; i++)
         {
-			if(i == count-1)
+			if(i == count - 1)
             {
 				free = N - arr[i].endMemory;
 			}
             else
             {
-				free = arr[i+1].startMemory - arr[i].endMemory;
+				free = arr[i + 1].startMemory - arr[i].endMemory;
 			}	
 			if(free>=bytes)
             {
@@ -90,7 +90,7 @@ short firstFit(char temp[], int bytes, int count,  Process arr[], int N)
 
 	if(marker == 1)
     {
-		strncpy(arr[count].processID, temp,7);
+		strncpy(arr[count].processID, temp, 7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
@@ -128,7 +128,7 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 		    if(N >= bytes)
             {
 		        marker = 1;
-		        start =0;
+		        start = 0;
 		    }
 	    }	
 	    else
@@ -137,7 +137,7 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 		    if( free < min && free >= bytes)
             {
 			    min = free;
-			    start =0;
+			    start = 0;
 			    marker = 1;
 	        }
 	    }
@@ -145,13 +145,13 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 	for(int i = 0; i < count; i++)
     {
 		
-		if(i == count-1)
+		if(i == count - 1)
         {
 			free = N - arr[i].endMemory;
 		}
 		else
         {
-			free = arr[i+1].startMemory - arr[i].endMemory;
+			free = arr[i + 1].startMemory - arr[i].endMemory;
 		}
 		if(free < min && free >= bytes)
         {
@@ -163,7 +163,7 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 
 	if(marker == 1)
     {
-		strncpy(arr[count].processID, temp,7);
+		strncpy(arr[count].processID, temp, 7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
@@ -184,7 +184,7 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 short worstFit(char temp[], int bytes,  int count, Process arr[], int N)
 {
 	int start;
-	int max =INT_MIN;
+	int max = INT_MIN;
 	short marker = 0;
 	int free;
     
@@ -205,7 +205,7 @@ short worstFit(char temp[], int bytes,  int count, Process arr[], int N)
 		if(bytes > 0 && free >max && free >= bytes)
         {
 			max = free;
-			start=0;
+			start = 0;
 			marker = 1;
 		}
 	}
@@ -236,7 +236,7 @@ short worstFit(char temp[], int bytes,  int count, Process arr[], int N)
 			
 		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
-		qsort(arr,count+1,sizeof(Process),processCompare);
+		qsort(arr, count + 1, sizeof(Process), processCompare);
 		return 1;
 	}
 	else
@@ -254,24 +254,22 @@ short nextFit(char last[], char temp[], int bytes, int count,  Process arr[], in
 	int free;
 	int lastidx = -1;
 	int index;
-	
 
 	if(bytes <= 0)
     {
-
 		printf("FAIL REQUEST %s %d\n", temp, bytes);
 			return 0;
 	}
 	if(count == 0 && bytes <= N)
     {
 		start = 0;
-		marker =1;
+		marker = 1;
 	}	
 	if(count != 0)
     {
-		for(int i =0; i < count; i++)
+		for(int i = 0; i < count; i++)
         {
-		    if(strcmp(last,arr[i].processID)==0)
+		    if(strcmp(last,arr[i].processID) == 0)
             {
 			    lastidx = i;
 			    index = i;
@@ -283,7 +281,7 @@ short nextFit(char last[], char temp[], int bytes, int count,  Process arr[], in
     {
 		for(int i = 0; i <= count; i++) 
 		{
-		    if(index == count-1)
+		    if(index == count - 1)
             {
 		    	free = N - arr[index].endMemory;
 		    }
@@ -293,7 +291,7 @@ short nextFit(char last[], char temp[], int bytes, int count,  Process arr[], in
 		        }
 		            else
                     {
-		            	free = arr[index+1].startMemory - arr[index].endMemory;
+		            	free = arr[index + 1].startMemory - arr[index].endMemory;
 		            }	
 
 		
@@ -304,20 +302,20 @@ short nextFit(char last[], char temp[], int bytes, int count,  Process arr[], in
 			break;
 		}
 		index++;
-		index = index % (count+1);
+		index = index % (count + 1);
 		}
 	}
 	
 	if(marker == 1)
     {
-		strncpy(arr[count].processID, temp,7);
+		strncpy(arr[count].processID, temp, 7);
 		arr[count].startMemory = start;
 		arr[count].endMemory = arr[count].startMemory + bytes;
 		arr[count].size = bytes;
 			
 		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
-		qsort(arr,count+1,sizeof(Process),processCompare);
+		qsort(arr,count + 1,sizeof(Process),processCompare);
 		return 1;
 	}
 	else
@@ -344,9 +342,9 @@ short releaseMem(char temp[],  int count,  Process arr[])
 	if(marker == 1)
     {
 		printf("FREE %s %d %d \n",arr[index].processID, arr[index].size, arr[index].startMemory);
-		for(int i = index; i <count-1; i++)
+		for(int i = index; i < count - 1; i++)
         {
-			arr[i] = arr[i+1];
+			arr[i] = arr[i + 1];
 		}
 		
 		return 1;
@@ -359,7 +357,7 @@ short releaseMem(char temp[],  int count,  Process arr[])
 }
 
 //prints assigned memory space
-void printAssigned(int count,  Process arr[])
+void printAssigned(int count, Process arr[])
 {
 	if(count == 0)
     {
@@ -384,21 +382,21 @@ void printAvailable(int count, Process arr[], int N)
 	int free;
 	if(count == 0)
     {
-		marker =1;
-		printf("(%d, %d) ",N, 0);
+		marker = 1;
+		printf("(%d, %d) ", N, 0);
 	}
 	else
 	{
-		free = arr[0].startMemory-0 ;
+		free = arr[0].startMemory-0;
 		if(free > 0)
         {
 			marker = 1;
 			printf("(%d, %d) ",free, 0);
 		}
 	}
-	for(int i =0; i < count; i++)
+	for(int i = 0; i < count; i++)
     {
-		if(i == count-1)
+		if(i == count - 1)
         {
 			free = N-arr[i].endMemory;
 			if(free > 0)
@@ -409,7 +407,7 @@ void printAvailable(int count, Process arr[], int N)
 		}
 		else
         {
-			free = arr[i+1].startMemory - arr[i].endMemory;
+			free = arr[i + 1].startMemory - arr[i].endMemory;
 			if(free > 0 )
             {
 				marker =1;
@@ -437,7 +435,7 @@ int main(int argc, char** argv)
 	char comment[] = {"#"};
 	char last[7];
 
-	while(fscanf(filePointer,"%s",input) ==1)
+	while(fscanf(filePointer,"%s",input) == 1)
     {
 		if(strcmp(comment,input) == 0)
         {
@@ -460,33 +458,33 @@ int main(int argc, char** argv)
 
 			if(strcmp("BESTFIT",argv[1]) == 0)
             {
-				if(bestFit(temp,bytes,count,arr,N)==1)
+				if(bestFit(temp,bytes,count,arr,N) == 1)
                 {
 					count++;
 				}
 	
 			}
-            else if(strcmp("FIRSTFIT",argv[1])==0)
+            else if(strcmp("FIRSTFIT",argv[1]) == 0)
             {
-				if(firstFit(temp,bytes,count,arr,N)==1)
+				if(firstFit(temp,bytes,count,arr,N) == 1)
                 {
 					count++;
 				}
 			
 			
 			}
-            else if(strcmp("NEXTFIT",argv[1])==0)
+            else if(strcmp("NEXTFIT",argv[1]) == 0)
             {
-				if(nextFit(last,temp,bytes,count,arr,N)==1)
+				if(nextFit(last,temp,bytes,count,arr,N) == 1)
                 {
 					count++;
 					strncpy(last,temp,7);
 				}
 				
 			}
-            else if(strcmp("WORSTFIT",argv[1])==0)
+            else if(strcmp("WORSTFIT",argv[1]) == 0)
             {
-				if(worstFit(temp,bytes,count,arr,N) ==1)
+				if(worstFit(temp,bytes,count,arr,N) == 1)
                 {
 					count++;
 				}
@@ -494,7 +492,7 @@ int main(int argc, char** argv)
 			}
 		}
         
-        else if(strcmp("RELEASE",input)==0)
+        else if(strcmp("RELEASE",input) == 0)
         {
 			char temp[7];
 			if(fscanf(filePointer,"%s",input) == 1)
@@ -502,7 +500,7 @@ int main(int argc, char** argv)
 				strncpy(temp,input,7);
 			}
 			
-			if(releaseMem(temp, count, arr)==1)
+			if(releaseMem(temp, count, arr) == 1)
             {
 				count--;
 			}
