@@ -4,7 +4,7 @@
 #include <limits.h>
 
 //struct that stores the process objects
-struct process
+struct Process
 {
 	int startMemory;
 	int endMemory;
@@ -12,19 +12,19 @@ struct process
     	char processID[7];
 };
 
-typedef struct process process;
+typedef struct Process Process;
 
 //compares the processes
 int processCompare(const void * left, const void * right)
 {
-	const process *a =(const void*) left;
-	const process *b = (const void*) right;
+	const Process *a =(const void*) left;
+	const Process *b = (const void*) right;
 	return (*a).startMemory - (*b).startMemory;
 
 }
 
 //function to find specific process
-void findProcess(char temp[],process arr[],int count)
+void findProcess(char temp[],Process arr[],int count)
 {
  	short marker = 0;
 	for(int i = 0; i < count; i++)
@@ -44,7 +44,7 @@ void findProcess(char temp[],process arr[],int count)
 }
 
 //function for first fit memory allocation algorithim
-short firstFit(char temp[], int bytes, int count,  process arr[], int N)
+short firstFit(char temp[], int bytes, int count,  Process arr[], int N)
 {
 	int start;
 	short marker =0;
@@ -101,7 +101,7 @@ short firstFit(char temp[], int bytes, int count,  process arr[], int N)
 			
 		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
-		qsort(arr,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(Process),processCompare);
 		return 1;
 	}
 	else
@@ -113,7 +113,7 @@ short firstFit(char temp[], int bytes, int count,  process arr[], int N)
 }
 
 //function for best fit memory allocation algorithim
-short bestFit(char temp[], int bytes, int count,  process arr[], int N)
+short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 {
 	int start;
 	int min = INT_MAX ;
@@ -174,7 +174,7 @@ short bestFit(char temp[], int bytes, int count,  process arr[], int N)
 		arr[count].size = bytes;
 		
 		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
-		qsort(arr,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(Process),processCompare);
 
 		return 1;
 	}
@@ -188,7 +188,7 @@ short bestFit(char temp[], int bytes, int count,  process arr[], int N)
 }
 
 //function for worst fit memory allocation algorithim
-short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
+short  worstFit(char temp[], int bytes,  int count, Process arr[], int N)
 {
 	int start;
 	int max =INT_MIN;
@@ -243,7 +243,7 @@ short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
 			
 		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
-		qsort(arr,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(Process),processCompare);
 		return 1;
 	}
 	else
@@ -254,7 +254,7 @@ short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
 }
 
 //function for next fit memory allocation algorithim
-short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], int N)
+short  nextFit(char last[], char temp[], int bytes, int count,  Process arr[], int N)
 {
 	int start;
 	short marker =0;
@@ -325,7 +325,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 			
 		printf("ALLOCATED %s %d \n",arr[count].processID, arr[count].startMemory);
 	
-		qsort(arr,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(Process),processCompare);
 		return 1;
 	}
 	else
@@ -336,7 +336,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 }
 
 //function to release memory space
-short releaseMem(char temp[],  int count,  process arr[])
+short releaseMem(char temp[],  int count,  Process arr[])
 {
 	short marker = 0;
 	int index;
@@ -367,7 +367,7 @@ short releaseMem(char temp[],  int count,  process arr[])
 }
 
 //prints assigned memory space
-void printAssigned(int count,  process arr[])
+void printAssigned(int count,  Process arr[])
 {
 	if(count == 0)
     {
@@ -386,7 +386,7 @@ void printAssigned(int count,  process arr[])
 }
 
 //prints available memory space
-void printAvailable(int count, process arr[], int N)
+void printAvailable(int count, Process arr[], int N)
 {
 	short marker = 0;
 	int free;
@@ -432,19 +432,18 @@ void printAvailable(int count, process arr[], int N)
 	printf("\n");
 }
 
-
-
 int main(int argc, char** argv)
 {
 	
 	FILE *filePointer;
 	filePointer = fopen(argv[3],"r");
+    Process arr[200000];
+
 	int count = 0;
 	int N = atoi(argv[2]);
 	char input[20];
 	char comment[] = {"#"};
 	char last[7];
-	process arr[200000];
 
 	while(fscanf(filePointer,"%s",input) ==1)
     {
