@@ -336,7 +336,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 }
 
 //function to release memory space
-short release(char temp[],  int count,  process arr[])
+short releaseMem(char temp[],  int count,  process arr[])
 {
 	short marker = 0;
 	int index;
@@ -511,7 +511,7 @@ int main(int argc, char** argv)
 				strncpy(temp,input,7);
 			}
 			
-			if(release(temp, count, arr)==1)
+			if(releaseMem(temp, count, arr)==1)
             {
 				count--;
 			}
