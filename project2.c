@@ -13,7 +13,7 @@ struct Process
 
 }; typedef struct Process Process;
 
-//function to find specific process
+//function that finds specific process
 void findProcess(char temp[],Process arr[],int count)
 {
  	short marker = 0;
@@ -26,12 +26,12 @@ void findProcess(char temp[],Process arr[],int count)
 		}
 	}
 	if(marker == 0 )
-    	{
+   	{
 		printf("FAULT\n");
 	}
 }
 
-//compares the processes
+//function that compares the processes
 int processCompare(const void * left, const void * right)
 {
 	const Process *a =(const void*) left;
@@ -181,7 +181,7 @@ short bestFit(char temp[], int bytes, int count,  Process arr[], int N)
 }
 
 //function for worst fit memory allocation algorithim
-short  worstFit(char temp[], int bytes,  int count, Process arr[], int N)
+short worstFit(char temp[], int bytes,  int count, Process arr[], int N)
 {
 	int start;
 	int max =INT_MIN;
@@ -247,7 +247,7 @@ short  worstFit(char temp[], int bytes,  int count, Process arr[], int N)
 }
 
 //function for next fit memory allocation algorithim
-short  nextFit(char last[], char temp[], int bytes, int count,  Process arr[], int N)
+short nextFit(char last[], char temp[], int bytes, int count,  Process arr[], int N)
 {
 	int start;
 	short marker =0;
