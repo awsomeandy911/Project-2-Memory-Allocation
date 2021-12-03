@@ -437,8 +437,8 @@ void listAvailable(int count, process arr[], int N)
 int main(int argc, char** argv)
 {
 	
-	FILE *fptr;
-	fptr = fopen(argv[3],"r");
+	FILE *filePointer;
+	filePointer = fopen(argv[3],"r");
 	int count = 0;
 	int N = atoi(argv[2]);
 	char input[20];
@@ -446,23 +446,23 @@ int main(int argc, char** argv)
 	char last[7];
 	process arr[200000];
 
-	while(fscanf(fptr,"%s",input) ==1)
+	while(fscanf(filePointer,"%s",input) ==1)
     {
 		if(strcmp(comment,input) == 0)
         {
-			fscanf(fptr, "%*[^\n]\n");
+			fscanf(filePointer, "%*[^\n]\n");
 			continue;
 		}
         else if(strcmp("REQUEST", input) == 0)
         {
 			char temp[7];
 			int bytes;
-			if(fscanf(fptr,"%s",input) == 1)
+			if(fscanf(filePointer,"%s",input) == 1)
             {
 				strncpy(temp,input,7);
 			
 			}
-			if(fscanf(fptr, "%s", input) == 1)
+			if(fscanf(filePointer, "%s", input) == 1)
             {
 				bytes =atoi(input);
 			}
@@ -506,7 +506,7 @@ int main(int argc, char** argv)
         else if(strcmp("RELEASE",input)==0)
         {
 			char temp[7];
-			if(fscanf(fptr,"%s",input) == 1)
+			if(fscanf(filePointer,"%s",input) == 1)
             {
 				strncpy(temp,input,7);
 			}
@@ -519,7 +519,7 @@ int main(int argc, char** argv)
 		}
         else if(strcmp("LIST",input) == 0)
         {
-			fscanf(fptr,"%s",input);
+			fscanf(filePointer,"%s",input);
 			if(strcmp("ASSIGNED",input) == 0)
             {
 				listAssigned(count,arr);
@@ -531,7 +531,7 @@ int main(int argc, char** argv)
 		}
         else if(strcmp("FIND",input) == 0)
         {
-			if(fscanf(fptr,"%s",input) == 1)
+			if(fscanf(filePointer,"%s",input) == 1)
             {
 				find(input,arr,count);
 			}
