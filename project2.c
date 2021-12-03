@@ -24,24 +24,27 @@ int processCompare(const void * left, const void * right)
 }
 
 //find function
-void find(char temp[],process array[],int count)
+void find(char temp[],process arr[],int count)
 {
  	short flag = 0;
-	for(int i =0; i < count; i++){
-		if(strcmp(temp,array[i].pid)==0){
+	for(int i = 0; i < count; i++)
+    {
+		if(strcmp(temp,arr[i].pid)==0)
+        {
 			flag = 1;
-			printf("(%s, %d, %d)\n", array[i].pid, array[i].size, array[i].startMemory);
+			printf("(%s, %d, %d)\n", arr[i].pid, arr[i].size, arr[i].startMemory);
 		}
 
 	}
 
-	if(flag == 0 ){
+	if(flag == 0 )
+    {
 		printf("FAULT\n");
 	}
 }
 
 //function for first fit memory allocation algorithim
-short firstFit(char temp[], int bytes, int count,  process array[], int N)
+short firstFit(char temp[], int bytes, int count,  process arr[], int N)
 {
 	int start;
 	short flag =0;
@@ -55,7 +58,7 @@ short firstFit(char temp[], int bytes, int count,  process array[], int N)
 	if(count == 0){
 		free = N;
 	}else{
-		free = array[0].startMemory - 0;
+		free = arr[0].startMemory - 0;
 	}
 
 	if(bytes >0 && free >=bytes){
@@ -65,12 +68,12 @@ short firstFit(char temp[], int bytes, int count,  process array[], int N)
 	if(flag == 0){
 		for(int i =0; i < count; i++){
 			if(i == count-1){
-				free = N - array[i].endMemory;
+				free = N - arr[i].endMemory;
 			}else{
-				free = array[i+1].startMemory - array[i].endMemory;
+				free = arr[i+1].startMemory - arr[i].endMemory;
 			}	
 			if(free>=bytes){
-				start = array[i].endMemory;
+				start = arr[i].endMemory;
 				flag = 1;
 				break;
 			}
@@ -79,14 +82,14 @@ short firstFit(char temp[], int bytes, int count,  process array[], int N)
 	}
 
 	if(flag == 1){
-		strncpy(array[count].pid, temp,7);
-		array[count].startMemory = start;
-		array[count].endMemory = array[count].startMemory + bytes;
-		array[count].size = bytes;
+		strncpy(arr[count].pid, temp,7);
+		arr[count].startMemory = start;
+		arr[count].endMemory = arr[count].startMemory + bytes;
+		arr[count].size = bytes;
 			
-		printf("ALLOCATED %s %d \n",array[count].pid, array[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
 	
-		qsort(array,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
 	}
 	else{
@@ -97,7 +100,7 @@ short firstFit(char temp[], int bytes, int count,  process array[], int N)
 }
 
 //function for best fit memory allocation algorithim
-short bestFit(char temp[], int bytes, int count,  process array[], int N)
+short bestFit(char temp[], int bytes, int count,  process arr[], int N)
 {
 	int start;
 	int min =INT_MAX ;
@@ -118,7 +121,7 @@ short bestFit(char temp[], int bytes, int count,  process array[], int N)
 		}
 	}	
 	else{
-		free = array[0].startMemory -0;
+		free = arr[0].startMemory -0;
 		if( free < min && free >= bytes){
 			min = free;
 			start =0;
@@ -129,25 +132,25 @@ short bestFit(char temp[], int bytes, int count,  process array[], int N)
 	for(int i = 0; i < count; i++){
 		
 		if(i == count-1){
-			free = N - array[i].endMemory;
+			free = N - arr[i].endMemory;
 		}
 		else{
-			free = array[i+1].startMemory - array[i].endMemory;
+			free = arr[i+1].startMemory - arr[i].endMemory;
 		}
 		if(free < min && free >= bytes){
 			min = free;
-			start = array[i].endMemory ;
+			start = arr[i].endMemory ;
 			flag = 1;
 		}
 	}
 	if(flag == 1){
-		strncpy(array[count].pid, temp,7);
-		array[count].startMemory = start;
-		array[count].endMemory = array[count].startMemory + bytes;
-		array[count].size = bytes;
+		strncpy(arr[count].pid, temp,7);
+		arr[count].startMemory = start;
+		arr[count].endMemory = arr[count].startMemory + bytes;
+		arr[count].size = bytes;
 		
-		printf("ALLOCATED %s %d \n",array[count].pid, array[count].startMemory);
-		qsort(array,count+1,sizeof(process),processCompare);
+		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
+		qsort(arr,count+1,sizeof(process),processCompare);
 
 		return 1;
 	}
@@ -160,7 +163,7 @@ short bestFit(char temp[], int bytes, int count,  process array[], int N)
 }
 
 //function for worst fit memory allocation algorithim
-short  worstFit(char temp[], int bytes,  int count, process array[], int N)
+short  worstFit(char temp[], int bytes,  int count, process arr[], int N)
 {
 	int start;
 	int max =INT_MIN;
@@ -176,7 +179,7 @@ short  worstFit(char temp[], int bytes,  int count, process array[], int N)
 		flag = 1;
 	}	
 	if(count !=0){
-		free = array[0].startMemory - 0;
+		free = arr[0].startMemory - 0;
 		if(bytes > 0 && free >max && free >= bytes){
 			max = free;
 			start=0;
@@ -187,26 +190,26 @@ short  worstFit(char temp[], int bytes,  int count, process array[], int N)
 	for(int i = 0; i < count; i++){
 		
 		if(i == count-1){
-			free = N - array[i].endMemory;
+			free = N - arr[i].endMemory;
 		} 
 		else{
-			free = array[i+1].startMemory - array[i].endMemory;
+			free = arr[i+1].startMemory - arr[i].endMemory;
 		}
 		if(free > max && free >= bytes){
 			max = free;
-			start = array[i].endMemory;
+			start = arr[i].endMemory;
 			flag = 1;
 		}
 	}
 	if(flag == 1){
-		strncpy(array[count].pid, temp,7);
-		array[count].startMemory = start;
-		array[count].endMemory = array[count].startMemory + bytes;
-		array[count].size = bytes;
+		strncpy(arr[count].pid, temp,7);
+		arr[count].startMemory = start;
+		arr[count].endMemory = arr[count].startMemory + bytes;
+		arr[count].size = bytes;
 			
-		printf("ALLOCATED %s %d \n",array[count].pid, array[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
 	
-		qsort(array,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
 	}
 	else{
@@ -216,7 +219,7 @@ short  worstFit(char temp[], int bytes,  int count, process array[], int N)
 }
 
 //function for next fit memory allocation algorithim
-short  nextFit(char last[], char temp[], int bytes, int count,  process array[], int N)
+short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], int N)
 {
 	int start;
 	short flag =0;
@@ -236,7 +239,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process array[],
 	}	
 	if(count != 0){
 		for(int i =0; i < count; i++){
-		if(strcmp(last,array[i].pid)==0){
+		if(strcmp(last,arr[i].pid)==0){
 			lastidx = i;
 			index = i;
 		}
@@ -248,17 +251,17 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process array[],
 		for(int i = 0; i <= count; i++) 
 		{
 		if(index == count-1){
-			free = N - array[index].endMemory;
+			free = N - arr[index].endMemory;
 		}else if(index == count){
-			free = array[0].startMemory - 0;
+			free = arr[0].startMemory - 0;
 		}
 		else{
-			free = array[index+1].startMemory - array[index].endMemory;
+			free = arr[index+1].startMemory - arr[index].endMemory;
 		}	
 
 		
 		if(free>=bytes){
-			start = array[index].endMemory;
+			start = arr[index].endMemory;
 			flag = 1;
 			break;
 		}
@@ -273,14 +276,14 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process array[],
 	
 
 	if(flag == 1){
-		strncpy(array[count].pid, temp,7);
-		array[count].startMemory = start;
-		array[count].endMemory = array[count].startMemory + bytes;
-		array[count].size = bytes;
+		strncpy(arr[count].pid, temp,7);
+		arr[count].startMemory = start;
+		arr[count].endMemory = arr[count].startMemory + bytes;
+		arr[count].size = bytes;
 			
-		printf("ALLOCATED %s %d \n",array[count].pid, array[count].startMemory);
+		printf("ALLOCATED %s %d \n",arr[count].pid, arr[count].startMemory);
 	
-		qsort(array,count+1,sizeof(process),processCompare);
+		qsort(arr,count+1,sizeof(process),processCompare);
 		return 1;
 	}
 	else{
@@ -290,21 +293,21 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process array[],
 }
 
 //release function
-short release(char temp[],  int count,  process array[])
+short release(char temp[],  int count,  process arr[])
 {
 	short flag = 0;
 	int index;
 	for(int i = 0; i < count; i++){
-		if(strcmp(temp,array[i].pid) == 0){
+		if(strcmp(temp,arr[i].pid) == 0){
 			flag = 1;
 			index = i;
 		}
 	}
 
 	if(flag == 1){
-		printf("FREE %s %d %d \n",array[index].pid, array[index].size, array[index].startMemory);
+		printf("FREE %s %d %d \n",arr[index].pid, arr[index].size, arr[index].startMemory);
 		for(int i = index; i <count-1; i++){
-			array[i] = array[i+1];
+			arr[i] = arr[i+1];
 		}
 		
 		return 1;
@@ -316,14 +319,14 @@ short release(char temp[],  int count,  process array[])
 }
 
 //prints assigned list
-void listAssigned(int count,  process array[])
+void listAssigned(int count,  process arr[])
 {
 	if(count == 0){
 		printf("NONE");
 	}
 	else{
 		for (int i = 0; i < count; i++){
-			printf("(%s, %d, %d) ",array[i].pid, array[i].size, array[i].startMemory);
+			printf("(%s, %d, %d) ",arr[i].pid, arr[i].size, arr[i].startMemory);
 		}
 
 	}
@@ -332,7 +335,7 @@ void listAssigned(int count,  process array[])
 }
 
 //prints available
-void listAvailable(int count, process array[], int N)
+void listAvailable(int count, process arr[], int N)
 {
 	short flag = 0;
 	int free;
@@ -342,7 +345,7 @@ void listAvailable(int count, process array[], int N)
 	}
 	else
 	{
-		free = array[0].startMemory-0 ;
+		free = arr[0].startMemory-0 ;
 		if(free > 0){
 			flag = 1;
 			printf("(%d, %d) ",free, 0);
@@ -350,17 +353,17 @@ void listAvailable(int count, process array[], int N)
 	}
 	for(int i =0; i < count; i++){
 		if(i == count-1){
-			free = N-array[i].endMemory;
+			free = N-arr[i].endMemory;
 			if(free > 0){
 				flag = 1;
-				printf("(%d, %d) ",free,array[i].endMemory);
+				printf("(%d, %d) ",free,arr[i].endMemory);
 			}
 		}
 		else{
-			free = array[i+1].startMemory - array[i].endMemory;
+			free = arr[i+1].startMemory - arr[i].endMemory;
 			if(free > 0 ){
 				flag =1;
-				printf("(%d, %d) ", free,array[i].endMemory);
+				printf("(%d, %d) ", free,arr[i].endMemory);
 			}
 		}
 	}
@@ -383,7 +386,7 @@ int main(int argc, char** argv)
 	char input[20];
 	char comment[] = {"#"};
 	char last[7];
-	process array[200000];
+	process arr[200000];
 
 	while(fscanf(fptr,"%s",input) ==1){
 		if(strcmp(comment,input) == 0){
@@ -401,24 +404,24 @@ int main(int argc, char** argv)
 			}
 
 			if(strcmp("BESTFIT",argv[1]) == 0){
-				if(bestFit(temp,bytes,count,array,N)==1){
+				if(bestFit(temp,bytes,count,arr,N)==1){
 					count++;
 				}
 	
 			}else if(strcmp("FIRSTFIT",argv[1])==0){
-				if(firstFit(temp,bytes,count,array,N)==1){
+				if(firstFit(temp,bytes,count,arr,N)==1){
 					count++;
 				}
 			
 			
 			}else if(strcmp("NEXTFIT",argv[1])==0){
-				if(nextFit(last,temp,bytes,count,array,N)==1){
+				if(nextFit(last,temp,bytes,count,arr,N)==1){
 					count++;
 					strncpy(last,temp,7);
 				}
 				
 			}else if(strcmp("WORSTFIT",argv[1])==0){
-				if(worstFit(temp,bytes,count,array,N) ==1){
+				if(worstFit(temp,bytes,count,arr,N) ==1){
 					count++;
 				}
 				
@@ -429,21 +432,21 @@ int main(int argc, char** argv)
 				strncpy(temp,input,7);
 			}
 			
-			if(release(temp, count, array)==1){
+			if(release(temp, count, arr)==1){
 				count--;
 			}
 			
 		}else if(strcmp("LIST",input) == 0){
 			fscanf(fptr,"%s",input);
 			if(strcmp("ASSIGNED",input) == 0){
-				listAssigned(count,array);
+				listAssigned(count,arr);
 			}
 			else{
-				listAvailable(count,array,N);
+				listAvailable(count,arr,N);
 			}
 		}else if(strcmp("FIND",input) == 0){
 			if(fscanf(fptr,"%s",input) == 1){
-				find(input,array,count);
+				find(input,arr,count);
 			}
 		}	
 	
