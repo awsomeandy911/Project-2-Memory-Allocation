@@ -23,8 +23,8 @@ int processCompare(const void * left, const void * right)
 
 }
 
-//find function
-void find(char temp[],process arr[],int count)
+//function to find specific process
+void findProcess(char temp[],process arr[],int count)
 {
  	short marker = 0;
 	for(int i = 0; i < count; i++)
@@ -335,7 +335,7 @@ short  nextFit(char last[], char temp[], int bytes, int count,  process arr[], i
 	}
 }
 
-//release function
+//function to release memory space
 short release(char temp[],  int count,  process arr[])
 {
 	short marker = 0;
@@ -366,8 +366,8 @@ short release(char temp[],  int count,  process arr[])
 	}
 }
 
-//prints assigned list
-void listAssigned(int count,  process arr[])
+//prints assigned memory space
+void printAssigned(int count,  process arr[])
 {
 	if(count == 0)
     {
@@ -385,8 +385,8 @@ void listAssigned(int count,  process arr[])
 	printf("\n");
 }
 
-//prints available
-void listAvailable(int count, process arr[], int N)
+//prints available memory space
+void printAvailable(int count, process arr[], int N)
 {
 	short marker = 0;
 	int free;
@@ -522,18 +522,18 @@ int main(int argc, char** argv)
 			fscanf(filePointer,"%s",input);
 			if(strcmp("ASSIGNED",input) == 0)
             {
-				listAssigned(count,arr);
+				printAssigned(count,arr);
 			}
 			else
             {
-				listAvailable(count,arr,N);
+				printAvailable(count,arr,N);
 			}
 		}
         else if(strcmp("FIND",input) == 0)
         {
 			if(fscanf(filePointer,"%s",input) == 1)
             {
-				find(input,arr,count);
+				findProcess(input,arr,count);
 			}
 		}	
 	
