@@ -10,9 +10,8 @@ struct Process
 	int endMemory;
 	int size;
     	char processID[7];
-};
-
-typedef struct Process Process;
+    
+}; typedef struct Process Process;
 
 //compares the processes
 int processCompare(const void * left, const void * right)
