@@ -9,7 +9,7 @@ struct Process
 	int startMemory;
 	int endMemory;
 	int size;
-    	char processID[7];
+    char processID[7];
 
 }; typedef struct Process Process;
 
@@ -18,15 +18,15 @@ void findProcess(char temp[],Process arr[],int count)
 {
  	short marker = 0;
 	for(int i = 0; i < count; i++)
-    	{
+    {
 		if(strcmp(temp,arr[i].processID) == 0)
-        	{
+        {
 			marker = 1;
 			printf("(%s, %d, %d)\n", arr[i].processID, arr[i].size, arr[i].startMemory);
 		}
 	}
 	if(marker == 0 )
-    	{
+    {
 		printf("FAULT\n");
 	}
 }
@@ -453,7 +453,7 @@ int main(int argc, char** argv)
 			}
 			if(fscanf(filePointer, "%s", input) == 1)
             {
-				bytes =atoi(input);
+				bytes = atoi(input);
 			}
 
 			if(strcmp("BESTFIT",argv[1]) == 0)
