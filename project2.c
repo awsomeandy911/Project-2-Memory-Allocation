@@ -9,7 +9,7 @@ struct Process
 	int startMemory;
 	int endMemory;
 	int size;
-    char processID[7];
+    	char processID[7];
 
 }; typedef struct Process Process;
 
@@ -18,15 +18,15 @@ void findProcess(char temp[],Process arr[],int count)
 {
  	short marker = 0;
 	for(int i = 0; i < count; i++)
-    {
+    	{
 		if(strcmp(temp,arr[i].processID) == 0)
-        {
+        	{
 			marker = 1;
 			printf("(%s, %d, %d)\n", arr[i].processID, arr[i].size, arr[i].startMemory);
 		}
 	}
 	if(marker == 0 )
-    {
+    	{
 		printf("FAULT\n");
 	}
 }
@@ -429,11 +429,12 @@ int main(int argc, char** argv)
 	filePointer = fopen(argv[3],"r");
     Process arr[200000];
 
-	int count = 0;
 	int N = atoi(argv[2]);
+	int count = 0;
+
 	char input[20];
-	char comment[] = {"#"};
 	char last[7];
+	char comment[] = {"#"};
 
 	while(fscanf(filePointer,"%s",input) == 1)
     {
@@ -448,56 +449,50 @@ int main(int argc, char** argv)
 			int bytes;
 			if(fscanf(filePointer,"%s",input) == 1)
             {
-				strncpy(temp,input,7);
-			
+				strncpy(temp, input, 7);		
 			}
 			if(fscanf(filePointer, "%s", input) == 1)
             {
 				bytes = atoi(input);
 			}
 
-			if(strcmp("BESTFIT",argv[1]) == 0)
+            if(strcmp("FIRSTFIT",argv[1]) == 0)
             {
-				if(bestFit(temp,bytes,count,arr,N) == 1)
+				if(firstFit(temp, bytes, count, arr, N) == 1)
                 {
 					count++;
-				}
-	
+				}	
 			}
-            else if(strcmp("FIRSTFIT",argv[1]) == 0)
+			else if(strcmp("BESTFIT",argv[1]) == 0)
             {
-				if(firstFit(temp,bytes,count,arr,N) == 1)
+				if(bestFit(temp, bytes, count, arr, N) == 1)
                 {
 					count++;
 				}
-			
-			
 			}
             else if(strcmp("NEXTFIT",argv[1]) == 0)
             {
-				if(nextFit(last,temp,bytes,count,arr,N) == 1)
+				if(nextFit(last, temp, bytes, count, arr, N) == 1)
                 {
 					count++;
-					strncpy(last,temp,7);
-				}
-				
+					strncpy(last, temp, 7);
+				}		
 			}
-            else if(strcmp("WORSTFIT",argv[1]) == 0)
+            else if(strcmp("WORSTFIT", argv[1]) == 0)
             {
-				if(worstFit(temp,bytes,count,arr,N) == 1)
+				if(worstFit(temp, bytes, count, arr, N) == 1)
                 {
 					count++;
-				}
-				
+				}			
 			}
 		}
         
-        else if(strcmp("RELEASE",input) == 0)
+        else if(strcmp("RELEASE", input) == 0)
         {
 			char temp[7];
 			if(fscanf(filePointer,"%s",input) == 1)
             {
-				strncpy(temp,input,7);
+				strncpy(temp, input, 7);
 			}
 			
 			if(releaseMem(temp, count, arr) == 1)
@@ -506,23 +501,23 @@ int main(int argc, char** argv)
 			}
 			
 		}
-        else if(strcmp("LIST",input) == 0)
+        else if(strcmp("LIST", input) == 0)
         {
 			fscanf(filePointer,"%s",input);
-			if(strcmp("ASSIGNED",input) == 0)
+			if(strcmp("ASSIGNED", input) == 0)
             {
-				printAssigned(count,arr);
+				printAssigned(count, arr);
 			}
 			else
             {
-				printAvailable(count,arr,N);
+				printAvailable(count, arr, N);
 			}
 		}
-        else if(strcmp("FIND",input) == 0)
+        else if(strcmp("FIND", input) == 0)
         {
-			if(fscanf(filePointer,"%s",input) == 1)
+			if(fscanf(filePointer,"%s", input) == 1)
             {
-				findProcess(input,arr,count);
+				findProcess(input, arr, count);
 			}
 		}	
 	
