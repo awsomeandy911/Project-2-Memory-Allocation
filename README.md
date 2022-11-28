@@ -1,5 +1,5 @@
-# cs3113fa21-project2
-Project 2: Memory Allocation CS 3113 Andy Le
+
+# Project 2: Memory Allocation CS 3113 Andy Le
 
 #Build 
 Command "make all" will run the code in project2.c 
